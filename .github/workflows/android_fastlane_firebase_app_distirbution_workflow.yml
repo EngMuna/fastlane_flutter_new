@@ -33,6 +33,7 @@ jobs:
         with:
           ruby-version: "3.1"
           bundler-cache: true
+          working-directory: android/fastlane 
 
 
       # 5️⃣ تثبيت Dependencies (اختياري لكن مهم)
