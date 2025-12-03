@@ -31,8 +31,9 @@ jobs:
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: "3.2.3"
+          ruby-version: "3.1"
           bundler-cache: true
+
 
       # 5️⃣ تثبيت Dependencies (اختياري لكن مهم)
       - name: Get Flutter dependencies
