@@ -13,7 +13,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      # 🔥 يجب استخدام Java 17 وليس 11
       - name: Set up JDK 17
         uses: actions/setup-java@v2
         with:
@@ -25,12 +24,21 @@ jobs:
         with:
           channel: stable
 
+      - name: Get Flutter dependencies
+        run: flutter pub get
+
+      - name: Build APK (Production)
+        run: flutter build apk --release --flavor production -t lib/main_production.dart --no-tree-shake-icons
+
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: "3.2.3"
           bundler-cache: true
-          working-directory: android/fastlane  # 👈 لازم fastlane مش android
+          working-directory: android
 
-      - name: Get Flutter dependencies
-        run: flutter
+      - name: Distribute to Firebase
+        env:
+          FIREBASE_CLI_TOKEN: ${{ secrets.FIREBASE_CLI_TOKEN }}
+        run: bundle exec fastlane android firebase_distribution
+        working-directory: android
